@@ -11,10 +11,12 @@ const typeDefs = gql`
         multipleUploadToS3 (files: [Upload]!) : [singleUploadResult]
     }
     type singleUploadResult {
-        filename : String!
-        encoding: String!
-        mimetype: String!
-        location: String!
+        success: Boolean!
+        message: String!
+        filename : String
+        encoding: String
+        mimetype: String
+        location: String
     }
 `;
 

@@ -10,12 +10,16 @@ let uploadProcess = async (file)=>{
         stream
         .on("error", (error)=>{
             if (error) fs.unlinkSync(path);
-            reject(error);
+            reject({
+                success: false,
+                message: "Some Error"
+            });
         })
         .pipe(fs.createWriteStream(path))
         .on("finish", ()=> {
             resolve({
-                filename, mimetype, encoding, location: path
+                filename, mimetype, encoding, location: path,
+                success: true, message: "Successfully Uploaded!"
             })
         })
     )
@@ -33,18 +37,45 @@ let uploadProcessToS3 = async (file) =>{
         filename, mimetype, encoding, location: upload.Location
     }
 }
+//Mime type check
+let typeCheck = async (item)=>{
+    let {mimetype} = await item;
+    if(!(mimetype === "image/png" || mimetype === "image/jpeg")){
+        return false;
+    }else{
+        return true;
+    }
+}
 
 const resolvers = {
     Mutation: {
         singleUpload : async (_, args)=>{
-           return uploadProcess(args.file);
+            let t = await typeCheck(args.file);
+            if (t){
+                return uploadProcess(args.file);
+            }else{
+                return {
+                    success: false,
+                    message: "Type Error"
+                }
+            }
+            
         },
         multipleUpload : async (_, args)=>{
-            let obj = (await Promise.all(args.files)).map(uploadProcess);
-            return obj;
+            let arrObj = (await Promise.all(args.files)).map(uploadProcess);
+            return arrObj;
         },
         singleUploadToS3 : async (_,args) =>{
-            return uploadProcessToS3(args.file);
+            let t = await typeCheck(args.file);
+            if (t){
+                return uploadProcessToS3(args.file);
+            }else{
+                return {
+                    success: false,
+                    message: "Type Error"
+                }
+            }
+            
         },
         multipleUploadToS3: async (_,args) => {
             let arrObj = (await Promise.all(args.files)).map(uploadProcessToS3);

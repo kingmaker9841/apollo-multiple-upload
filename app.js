@@ -6,7 +6,7 @@ const typeDefs = require('./config/typedefs');
 const resolvers = require('./config/resolvers');
 
 let server = new ApolloServer({
-    typeDefs, resolvers
+    typeDefs, resolvers, uploads: { maxFileSize: 1024*1024*2}
 });
 
 server.applyMiddleware({app});
