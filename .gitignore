@@ -1,0 +1,4 @@
+# Node Modules from server
+/node_modules
+#Environment variables
+.env

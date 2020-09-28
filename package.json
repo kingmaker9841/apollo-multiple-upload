@@ -1,0 +1,25 @@
+{
+  "name": "apollouploadmultiple",
+  "version": "1.0.0",
+  "description": "Uploading Multiple Files on apollo-server-express ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Express",
+    "Apollo",
+    "apollo-server-express",
+    "GraphQL",
+    "Multiple-File-Upload"
+  ],
+  "author": "Milan Panta",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^2.18.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^15.3.0",
+    "nodemon": "^2.0.4"
+  }
+}
