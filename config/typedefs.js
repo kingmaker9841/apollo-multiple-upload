@@ -7,6 +7,8 @@ const typeDefs = gql`
     type Mutation {
         singleUpload (file : Upload!) : singleUploadResult
         multipleUpload (files: [Upload]!) : [singleUploadResult]
+        singleUploadToS3 (file : Upload!) : singleUploadResult
+        multipleUploadToS3 (files: [Upload]!) : [singleUploadResult]
     }
     type singleUploadResult {
         filename : String!
